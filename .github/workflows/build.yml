@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        submodules: true
 
     - name: Set up JDK 17
       uses: actions/setup-java@v4
@@ -25,12 +27,12 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x ./V2rayNG/gradlew
 
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug
+    - name: Build Release APK
+      run: ./gradlew assembleRelease -x lint
       working-directory: ./V2rayNG
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: V2RAY-serf-debug
-        path: V2rayNG/app/build/outputs/apk/debug/*.apk
+        name: V2RAY-serf-release
+        path: V2rayNG/app/build/outputs/apk/release/*.apk
